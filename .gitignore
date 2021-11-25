@@ -1,0 +1,7 @@
+.idea/
+.terraform/
+local.yml
+config.yml
+manifest.yml
+redshift.json
+*.csv
