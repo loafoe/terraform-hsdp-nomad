@@ -6,7 +6,7 @@ locals {
 resource "random_pet" "deploy" {
 }
 
-resource "hsdp_container_host" "terraform" {
+resource "hsdp_container_host" "nomad" {
   name                        = "${random_pet.deploy.id}.dev"
   volumes                     = 1
   volume_size                 = 100
@@ -24,12 +24,12 @@ resource "hsdp_container_host" "terraform" {
 }
 
 resource "hsdp_container_host_exec" "init" {
-  host  = hsdp_container_host.terraform.private_ip
+  host  = hsdp_container_host.nomad.private_ip
   user  = var.cf_user
   agent = true
 
   commands = [
-    "docker run -d --name nomad -p8282:4646 -e DOCKER_HOST=tcp://${hsdp_container_host.terraform.private_ip}:2375 loafoe/nomad /app/nomad agent -dev -bind=0.0.0.0",
+    "docker run -d --name nomad -p8282:4646 -e DOCKER_HOST=tcp://${hsdp_container_host.nomad.private_ip}:2375 loafoe/nomad /app/nomad agent -dev -bind=0.0.0.0",
     "docker ps"
   ]
 }
