@@ -29,11 +29,10 @@ resource "hsdp_container_host_exec" "init" {
   agent = true
 
   commands = [
-    "docker run -d --name nomad -p8282:4646 -e DOCKER_HOST=tcp://${hsdp_container_host.nomad.private_ip}:2375 loafoe/nomad /app/nomad agent -dev -bind=0.0.0.0",
-    "docker ps"
+    "docker stop nomad || true",
+    "docker rm nomad || true",
+    "docker run -d --name nomad -p8282:4646 -e DOCKER_HOST=tcp://${hsdp_container_host.nomad.private_ip}:2375 loafoe/nomad /app/nomad agent -dev -bind=0.0.0.0 -acl-enabled",
+    "sleep 5",
+    "docker exec nomad /app/nomad acl bootstrap"
   ]
-}
-
-output "services" {
-  value = data.hsdp_config.cf.services
 }
