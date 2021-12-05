@@ -47,3 +47,18 @@ variable "volume_size" {
   type    = number
   default = 50
 }
+
+variable "nomad_image" {
+  type    = string
+  default = "loafoe/nomad"
+}
+
+variable "docker_username" {
+  type    = string
+  default = ""
+}
+
+variable "docker_password" {
+  type    = string
+  default = ""
+}
