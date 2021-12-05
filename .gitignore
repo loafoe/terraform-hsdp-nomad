@@ -1,7 +1,7 @@
 .idea/
 .terraform/
 local.yml
-config.yml
-manifest.yml
-redshift.json
+backend.tf
 *.csv
+*.tfstate
+*.tfvars
