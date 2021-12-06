@@ -29,8 +29,11 @@ resource "hsdp_container_host_exec" "init" {
   agent = true
 
   file {
-    content     = templatefile("${path.module}/templates/agent.hcl", {})
-    destination = "/home/${var.cf_user}/agent.hcl"
+    content = templatefile("${path.module}/templates/client.hcl", {
+      servers = ["${hsdp_container_host.nomad_server.private_ip}:8181"]
+      advertise_ip = hsdp_container_host.nomad.private_ip
+    })
+    destination = "/home/${var.cf_user}/client.hcl"
     permissions = "0755"
   }
 
@@ -41,8 +44,8 @@ resource "hsdp_container_host_exec" "init" {
     "docker volume rm nomad-config || true",
     "docker volume create nomad-config",
     "docker create -v nomad-config:/config --name alpine alpine",
-    "docker cp /home/${var.cf_user}/agent.hcl alpine:/config",
-    "docker run -d --name nomad -v nomad-config:/config -p8282:4646 -e DOCKER_HOST=tcp://${hsdp_container_host.nomad.private_ip}:2375 ${var.nomad_image} /app/nomad agent -dev -bind=0.0.0.0 -acl-enabled -plugin-dir=/plugins -config=/config/agent.hcl",
+    "docker cp /home/${var.cf_user}/client.hcl alpine:/config",
+    "docker run -d --name nomad -v nomad-config:/config -p8282:8282 -e NOMAD_ADDR=http://127.0.0.1:8282 -e DOCKER_HOST=tcp://${hsdp_container_host.nomad.private_ip}:2375 ${var.nomad_image} /app/nomad agent -client -bind=0.0.0.0 -acl-enabled -plugin-dir=/plugins -config=/config/client.hcl -data-dir=/tmp/nomad",
     "sleep 5",
     "docker exec nomad /app/nomad acl bootstrap"
   ]
