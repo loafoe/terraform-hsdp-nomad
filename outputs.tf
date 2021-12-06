@@ -5,3 +5,7 @@ output "nomad_proxy" {
 output "nomad_bootstrap" {
   value = hsdp_container_host_exec.init.result
 }
+
+output "nomad_server_bootstrap" {
+  value = hsdp_container_host_exec.nomad_server_init.result
+}

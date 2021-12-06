@@ -7,7 +7,7 @@ resource "cloudfoundry_app" "nomad_proxy" {
 
   environment = merge({
     CADDYFILE_BASE64 = base64encode(templatefile("${path.module}/templates/Caddyfile", {
-      upstream_url = "http://${hsdp_container_host.nomad.private_ip}:8282"
+      upstream_url = "http://${hsdp_container_host.nomad_server.private_ip}:8282"
     }))
   }, {})
 
