@@ -21,5 +21,6 @@ ports {
   rpc  = 8181
 }
 
+name = "${name}"
 region = "${region}"
 datacenter = "${datacenter}"

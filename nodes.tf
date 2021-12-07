@@ -22,10 +22,11 @@ resource "hsdp_container_host_exec" "init" {
 
   file {
     content = templatefile("${path.module}/templates/client.hcl", {
-      servers = ["${hsdp_container_host.nomad_server.private_ip}:8181"]
+      servers      = ["${hsdp_container_host.nomad_server.private_ip}:8181"]
       advertise_ip = hsdp_container_host.nomad.private_ip
-      region = "global"
-      datacenter = "dc2"
+      region       = "global"
+      datacenter   = "dc2"
+      name         = "node"
     })
     destination = "/home/${var.cf_user}/client.hcl"
     permissions = "0755"
