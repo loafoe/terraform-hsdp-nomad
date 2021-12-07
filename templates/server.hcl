@@ -1,16 +1,13 @@
 client {
+  enabled = true
   options = {
     "driver.allowlist" = "ch"
   }
-  servers = [
-    %{ for server in servers ~}
-        "${server}",
-    %{ endfor ~}
-  ]
-  server_join {
-    retry_max = 10
-    retry_interval = "10s"
-  }
+}
+
+server {
+  enabled          = true
+  bootstrap_expect = 1
 }
 
 advertise {
