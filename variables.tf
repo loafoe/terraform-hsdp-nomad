@@ -1,3 +1,7 @@
+variable "ldap_user" {
+  type = string
+}
+
 variable "cf_user" {
   type = string
 }

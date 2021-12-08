@@ -6,3 +6,18 @@ locals {
 resource "random_pet" "deploy" {
 }
 
+module "nomad_nodes" {
+  source = "./modules/node"
+
+  server_ip  = hsdp_container_host.nomad_server.private_ip
+  name       = "${random_pet.deploy.id}-node"
+  datacenter = "dc2"
+  region     = "global"
+
+  instance_type = var.instance_type
+
+  user        = var.ldap_user
+  user_groups = [var.ldap_user]
+
+  nomad_image = var.nomad_image
+}
