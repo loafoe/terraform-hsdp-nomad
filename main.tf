@@ -7,10 +7,12 @@ resource "random_pet" "deploy" {
 }
 
 module "nomad_nodes" {
+  count = 1
+
   source = "./modules/node"
 
   server_ip  = hsdp_container_host.nomad_server.private_ip
-  name       = "${random_pet.deploy.id}-node"
+  name       = "${random_pet.deploy.id}-node-${count.index}"
   datacenter = "dc2"
   region     = "global"
 
