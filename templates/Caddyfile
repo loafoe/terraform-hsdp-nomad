@@ -4,5 +4,12 @@
   }
   redir @insecure https://{host}{uri} permanent
 
-  reverse_proxy ${upstream_url}
+  reverse_proxy ${upstream_url} {
+	transport http {
+                max_conns_per_host 50
+		dial_timeout 2s
+                keepalive 5s
+                versions "1.1"
+	}
+}
 }
