@@ -57,6 +57,11 @@ variable "nomad_image" {
   default = "loafoe/nomad"
 }
 
+variable "consul_image" {
+  type    = string
+  default = "consul"
+}
+
 variable "docker_username" {
   type    = string
   default = ""

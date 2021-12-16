@@ -38,6 +38,7 @@ resource "hsdp_container_host_exec" "nomad_server_init" {
     "docker volume rm nomad-server-config || true",
     "docker volume create nomad-server-config",
     "docker volume create nomad-server-data || true",
+    "docker network create nomad || true",
     "docker create -v nomad-server-config:/config --name alpine alpine",
     "docker cp /home/${var.ldap_user}/server.hcl alpine:/config",
     "docker run -d --name nomad-server -v nomad-server-data:/nomad -v nomad-server-config:/config -p8282:8282 -p8181:8181 -e NOMAD_ADDR=http://127.0.0.1:8282 -e DOCKER_HOST=tcp://${hsdp_container_host.nomad_server.private_ip}:2375 ${var.nomad_image} /app/nomad agent -server -bind=0.0.0.0 -acl-enabled -plugin-dir=/plugins -config=/config/server.hcl -data-dir=/tmp/nomad",

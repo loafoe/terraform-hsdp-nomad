@@ -21,5 +21,6 @@ module "nomad_nodes" {
   user        = var.ldap_user
   user_groups = [var.ldap_user]
 
-  nomad_image = var.nomad_image
+  nomad_image  = var.nomad_image
+  consul_image = var.consul_image
 }

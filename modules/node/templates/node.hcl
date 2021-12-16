@@ -24,6 +24,10 @@ ports {
   rpc  = 8181
 }
 
+consul {
+  address = "#{consul_server_ip}:4040"
+}
+
 name = "${name}"
 region = "${region}"
 datacenter = "${datacenter}"

@@ -29,3 +29,7 @@ variable "user" {
 variable "nomad_image" {
   type = string
 }
+
+variable "consul_image" {
+  type = string
+}

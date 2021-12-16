@@ -5,6 +5,7 @@ resource "cloudfoundry_app" "nomad_proxy" {
   disk_quota   = 512
   docker_image = "envoyproxy/envoy-alpine:v1.20-latest"
   strategy     = "blue-green"
+  instances    = 8
 
   environment = merge({
     ENVOYCONFIG_BASE64 = base64encode(templatefile("${path.module}/templates/envoy.yaml", {
@@ -13,7 +14,7 @@ resource "cloudfoundry_app" "nomad_proxy" {
     }))
   }, {})
 
-  command           = "echo $ENVOYCONFIG_BASE64 | base64 -d > /etc/envoy/envoy.yaml && cat /etc/envoy/envoy.yaml && /usr/local/bin/envoy -c /etc/envoy/envoy.yaml --base-id 42"
+  command = "echo $ENVOYCONFIG_BASE64 | base64 -d > /etc/envoy/envoy.yaml && cat /etc/envoy/envoy.yaml && /usr/local/bin/envoy -c /etc/envoy/envoy.yaml --base-id 42"
   #health_check_type = "process"
 
   //noinspection HCLUnknownBlockType
