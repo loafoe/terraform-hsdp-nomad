@@ -22,6 +22,7 @@ advertise {
 ports {
   http = 8282
   rpc  = 8181
+  serf = 48862
 }
 
 consul {

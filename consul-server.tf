@@ -22,6 +22,6 @@ resource "hsdp_container_host_exec" "consul_server_init" {
     "docker volume create consul-server-data || true",
     "docker create -v consul-server-config:/config --name consul-alpine alpine",
     "docker cp /home/${var.ldap_user}/consul-server.hcl consul-alpine:/config/consul-server.hcl",
-    "docker run -d --name consul-server -v consul-server-data:/consul -v consul-server-config:/config -p4040:4040 -p4041:4041 -p8020:8020 -p6066:6066 ${var.consul_image} consul agent -config-file=/config/consul-server.hcl"
+    "docker run -d --restart on-failure --name consul-server -v consul-server-data:/consul -v consul-server-config:/config -p4040:4040 -p4041:4041 -p8020:8020 -p6066:6066 ${var.consul_image} consul agent -config-file=/config/consul-server.hcl"
   ]
 }
