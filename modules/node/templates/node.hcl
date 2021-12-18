@@ -25,7 +25,8 @@ ports {
 }
 
 consul {
-  address = "#{consul_server_ip}:4040"
+  address = "${advertise_ip}:4040"
+  checks_use_advertise = true
 }
 
 name = "${name}"

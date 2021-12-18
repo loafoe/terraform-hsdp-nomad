@@ -22,7 +22,8 @@ ports {
 }
 
 consul {
-  address = "172.17.0.1:8500"
+  address = "${advertise_ip}:4040"
+  checks_use_advertise = true
 }
 
 name = "${name}"
