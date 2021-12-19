@@ -1,5 +1,13 @@
-output "nomad_proxy" {
-  value = "https://${cloudfoundry_route.nomad_proxy.endpoint}"
+output "nomad" {
+  value = "https://${cloudfoundry_route.nomad.endpoint}"
+}
+
+output "fabio_ui" {
+  value = "https://${cloudfoundry_route.fabio_ui.endpoint}"
+}
+
+output "fabio" {
+  value = "https://${cloudfoundry_route.fabio.endpoint}"
 }
 
 output "nomad_server_bootstrap" {

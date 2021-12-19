@@ -9,8 +9,13 @@ resource "cloudfoundry_app" "nomad_proxy" {
 
   environment = merge({
     ENVOYCONFIG_BASE64 = base64encode(templatefile("${path.module}/templates/envoy.yaml", {
-      upstream_host = hsdp_container_host.nomad_server.private_ip
-      upstream_port = "8282"
+      upstream_host    = hsdp_container_host.nomad_server.private_ip
+      upstream_port    = "8282"
+      fabio_proxy_port = "10000"
+      fabio_ui_port    = "10001"
+      nomad_host       = cloudfoundry_route.nomad.endpoint
+      fabio_ui_host    = cloudfoundry_route.fabio_ui.endpoint
+      fabio_host       = cloudfoundry_route.fabio.endpoint
     }))
   }, {})
 
@@ -19,12 +24,31 @@ resource "cloudfoundry_app" "nomad_proxy" {
 
   //noinspection HCLUnknownBlockType
   routes {
-    route = cloudfoundry_route.nomad_proxy.id
+    route = cloudfoundry_route.nomad.id
+  }
+  routes {
+    route = cloudfoundry_route.fabio_ui.id
+  }
+  routes {
+    route = cloudfoundry_route.fabio.id
   }
 }
 
-resource "cloudfoundry_route" "nomad_proxy" {
+resource "cloudfoundry_route" "nomad" {
   domain   = data.cloudfoundry_domain.domain.id
   space    = data.cloudfoundry_space.space.id
-  hostname = "${random_pet.deploy.id}-proxy"
+  hostname = "${random_pet.deploy.id}-nomad"
 }
+
+resource "cloudfoundry_route" "fabio_ui" {
+  domain   = data.cloudfoundry_domain.domain.id
+  space    = data.cloudfoundry_space.space.id
+  hostname = "${random_pet.deploy.id}-fabio-ui"
+}
+
+resource "cloudfoundry_route" "fabio" {
+  domain   = data.cloudfoundry_domain.domain.id
+  space    = data.cloudfoundry_space.space.id
+  hostname = "${random_pet.deploy.id}-fabio"
+}
+

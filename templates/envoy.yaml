@@ -17,25 +17,41 @@ static_resources:
           route_config:
             name: local_route
             virtual_hosts:
-            - name: local_service
+            - name: nomad
               require_tls: EXTERNAL_ONLY
-              domains: ["*"]
+              domains: ["${nomad_host}"]
               routes:
               - match:
                   prefix: "/"
                 route:
-                  cluster: upstream_service
+                  cluster: nomad
+            - name: fabio
+              require_tls: EXTERNAL_ONLY
+              domains: ["${fabio_host}"]
+              routes:
+              - match:
+                  prefix: "/"
+                route:
+                  cluster: fabio
+            - name: fabio_ui
+              require_tls: EXTERNAL_ONLY
+              domains: ["${fabio_ui_host}"]
+              routes:
+              - match:
+                  prefix: "/"
+                route:
+                  cluster: fabio_ui
           http_filters:
           - name: envoy.filters.http.router
   clusters:
-  - name: upstream_service
+  - name: nomad
     connect_timeout: 30s
     type: LOGICAL_DNS
     # Comment out the following line to test on v6 networks
     dns_lookup_family: V4_ONLY
     lb_policy: ROUND_ROBIN
     load_assignment:
-      cluster_name: upstream_service
+      cluster_name: nomad
       endpoints:
       - lb_endpoints:
         - endpoint:
@@ -43,3 +59,33 @@ static_resources:
               socket_address:
                 address: ${upstream_host}
                 port_value: ${upstream_port}
+  - name: fabio
+    connect_timeout: 30s
+    type: LOGICAL_DNS
+    # Comment out the following line to test on v6 networks
+    dns_lookup_family: V4_ONLY
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: fabio
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: ${upstream_host}
+                port_value: ${fabio_proxy_port}
+  - name: fabio_ui
+    connect_timeout: 30s
+    type: LOGICAL_DNS
+    # Comment out the following line to test on v6 networks
+    dns_lookup_family: V4_ONLY
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: fabio_ui
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: ${upstream_host}
+                port_value: ${fabio_ui_port}

@@ -30,4 +30,4 @@ ports {
 
 advertise_addr = "${advertise_ip}"
 
-enable_central_service_config = true
+enable_central_service_config = false
