@@ -71,3 +71,8 @@ variable "docker_password" {
   type    = string
   default = ""
 }
+
+variable "docker_runtime" {
+  type    = string
+  default = "runc"
+}

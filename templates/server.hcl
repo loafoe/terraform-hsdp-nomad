@@ -22,9 +22,22 @@ ports {
   serf = 48862
 }
 
+telemetry {
+  publish_allocation_metrics = true
+  publish_node_metrics       = true
+  prometheus_metrics         = true
+}
+
 consul {
   address = "${advertise_ip}:4040"
   checks_use_advertise = true
+}
+
+plugin "nomad-driver-ch" {
+  config {
+    enabled = true
+    runtime = "${docker_runtime}"
+  }
 }
 
 name = "${name}"

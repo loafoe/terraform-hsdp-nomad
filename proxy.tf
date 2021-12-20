@@ -32,6 +32,9 @@ resource "cloudfoundry_app" "nomad_proxy" {
   routes {
     route = cloudfoundry_route.fabio.id
   }
+  routes {
+    route = cloudfoundry_route.test.id
+  }
 }
 
 resource "cloudfoundry_route" "nomad" {
@@ -50,5 +53,11 @@ resource "cloudfoundry_route" "fabio" {
   domain   = data.cloudfoundry_domain.domain.id
   space    = data.cloudfoundry_space.space.id
   hostname = "${random_pet.deploy.id}-fabio"
+}
+
+resource "cloudfoundry_route" "test" {
+  domain   = data.cloudfoundry_domain.domain.id
+  space    = data.cloudfoundry_space.space.id
+  hostname = "${random_pet.deploy.id}-test"
 }
 

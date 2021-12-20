@@ -33,3 +33,7 @@ variable "nomad_image" {
 variable "consul_image" {
   type = string
 }
+
+variable "docker_runtime" {
+  type = string
+}

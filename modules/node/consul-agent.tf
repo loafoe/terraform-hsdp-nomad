@@ -5,9 +5,9 @@ resource "hsdp_container_host_exec" "consul_agent_init" {
 
   file {
     content = templatefile("${path.module}/templates/consul-agent.hcl", {
-      advertise_ip = hsdp_container_host.nomad_node.private_ip
-      datacenter   = "dc1"
-      name         = "agent"
+      advertise_ip     = hsdp_container_host.nomad_node.private_ip
+      datacenter       = "dc1"
+      name             = "agent"
       consul_server_ip = var.server_ip
     })
     destination = "/home/${var.user}/consul-agent.hcl"

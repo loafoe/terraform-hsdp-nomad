@@ -27,7 +27,7 @@ static_resources:
                   cluster: nomad
             - name: fabio
               require_tls: EXTERNAL_ONLY
-              domains: ["${fabio_host}"]
+              domains: ["*"]
               routes:
               - match:
                   prefix: "/"

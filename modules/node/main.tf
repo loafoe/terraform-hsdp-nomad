@@ -28,6 +28,7 @@ resource "hsdp_container_host_exec" "init_nomad" {
       region           = "global"
       datacenter       = "dc2"
       name             = var.name
+      docker_runtime   = var.docker_runtime
     })
     destination = "/home/${var.user}/client.hcl"
     permissions = "0755"
