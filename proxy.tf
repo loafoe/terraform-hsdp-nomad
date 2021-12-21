@@ -44,30 +44,30 @@ resource "cloudfoundry_app" "nomad_proxy" {
 resource "cloudfoundry_route" "nomad" {
   domain   = data.cloudfoundry_domain.domain.id
   space    = data.cloudfoundry_space.space.id
-  hostname = "${random_pet.deploy.id}-nomad"
+  hostname = "nomad-${random_pet.deploy.id}"
 }
 
 resource "cloudfoundry_route" "fabio_ui" {
   domain   = data.cloudfoundry_domain.domain.id
   space    = data.cloudfoundry_space.space.id
-  hostname = "${random_pet.deploy.id}-fabio-ui"
+  hostname = "fabio-ui-${random_pet.deploy.id}"
 }
 
 resource "cloudfoundry_route" "fabio" {
   domain   = data.cloudfoundry_domain.domain.id
   space    = data.cloudfoundry_space.space.id
-  hostname = "${random_pet.deploy.id}-fabio"
+  hostname = "fabio-${random_pet.deploy.id}"
 }
 
 resource "cloudfoundry_route" "test" {
   domain   = data.cloudfoundry_domain.domain.id
   space    = data.cloudfoundry_space.space.id
-  hostname = "${random_pet.deploy.id}-test"
+  hostname = "test-${random_pet.deploy.id}"
 }
 
 resource "cloudfoundry_route" "grafana" {
   domain   = data.cloudfoundry_domain.domain.id
   space    = data.cloudfoundry_space.space.id
-  hostname = "${random_pet.deploy.id}-grafana"
+  hostname = "grafana-${random_pet.deploy.id}"
 }
 
