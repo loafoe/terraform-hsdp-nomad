@@ -7,7 +7,7 @@ resource "random_pet" "deploy" {
 }
 
 module "nomad_nodes" {
-  count = 2
+  count = 1
 
   source = "./modules/node"
 

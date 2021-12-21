@@ -22,7 +22,7 @@ static_resources:
             virtual_hosts:
             - name: nomad
               require_tls: EXTERNAL_ONLY
-              domains: ["${nomad_host}"]
+              domains: ["${nomad_host}", "${nomad_host}:4443"]
               routes:
               - match:
                   prefix: "/"
