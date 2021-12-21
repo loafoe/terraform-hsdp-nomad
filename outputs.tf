@@ -1,5 +1,5 @@
 output "nomad" {
-  value = "https://${cloudfoundry_route.nomad.endpoint}"
+  value = "https://${cloudfoundry_route.nomad.endpoint}:4443"
 }
 
 output "fabio_ui" {

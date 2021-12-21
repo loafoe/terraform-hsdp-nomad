@@ -37,3 +37,7 @@ variable "consul_image" {
 variable "docker_runtime" {
   type = string
 }
+
+variable "hostname_postfix" {
+  type = string
+}

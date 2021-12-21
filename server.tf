@@ -42,7 +42,7 @@ resource "hsdp_container_host_exec" "nomad_server_init" {
     "docker network create nomad || true",
     "docker create -v nomad-server-config:/config --name alpine alpine",
     "docker cp /home/${var.ldap_user}/server.hcl alpine:/config",
-    "docker run -d --restart on-failure --name nomad-server -v nomad-server-data:/nomad -v nomad-server-config:/config -p48862:48862 -p8282:8282 -p8181:8181 -e NOMAD_ADDR=http://127.0.0.1:8282 -e DOCKER_HOST=tcp://${hsdp_container_host.nomad_server.private_ip}:2375 -e CONSUL_REGISTRY_ADDR=http://${hsdp_container_host.nomad_server.private_ip}:4040 ${var.nomad_image} nomad agent -server -bind=0.0.0.0 -acl-enabled -plugin-dir=/plugins -config=/config/server.hcl -data-dir=/tmp/nomad",
+    "docker run -d --restart on-failure --name nomad-server -v nomad-server-data:/nomad -v nomad-server-config:/config -p48862:48862 -p8282:8282 -p8181:8181 -e NOMAD_ADDR=http://127.0.0.1:8282 -e DOCKER_HOST=tcp://${hsdp_container_host.nomad_server.private_ip}:2375 -e CONSUL_REGISTRY_ADDR=http://${hsdp_container_host.nomad_server.private_ip}:4040 -e HOSTNAME_POSTFIX=${local.hostname_postfix} ${var.nomad_image} nomad agent -server -bind=0.0.0.0 -acl-enabled -plugin-dir=/plugins -config=/config/server.hcl -data-dir=/tmp/nomad",
     "sleep 5",
     "docker exec nomad-server nomad acl bootstrap"
   ]

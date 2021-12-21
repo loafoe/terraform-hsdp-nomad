@@ -1,6 +1,7 @@
 locals {
-  cartel_token  = var.region == "us-east" ? var.us_cartel_token : var.eu_cartel_token
-  cartel_secret = var.region == "us-east" ? var.us_cartel_secret : var.eu_cartel_secret
+  cartel_token     = var.region == "us-east" ? var.us_cartel_token : var.eu_cartel_token
+  cartel_secret    = var.region == "us-east" ? var.us_cartel_secret : var.eu_cartel_secret
+  hostname_postfix = "${random_pet.deploy.id}.${data.hsdp_config.cf.domain}"
 }
 
 resource "random_pet" "deploy" {
@@ -24,4 +25,6 @@ module "nomad_nodes" {
 
   nomad_image  = var.nomad_image
   consul_image = var.consul_image
+
+  hostname_postfix = local.hostname_postfix
 }
