@@ -11,6 +11,9 @@ static_resources:
       - name: envoy.filters.network.http_connection_manager
         typed_config:
           "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          strip_any_host_port: true
+          upgrade_configs:
+          - upgrade_type: websocket
           scheme_header_transformation:
             scheme_to_overwrite: https
           stat_prefix: ingress_http
