@@ -1,6 +1,6 @@
 provider "hsdp" {
   region        = var.region
-  debug_log     = "/tmp/nomad.log"
+  debug_log     = "/tmp/nomad-us-east.log"
   uaa_username  = var.cf_user
   uaa_password  = var.cf_password
   cartel_token  = local.cartel_token
