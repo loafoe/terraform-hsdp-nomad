@@ -12,3 +12,8 @@ provider "cloudfoundry" {
   user     = var.cf_user
   password = var.cf_password
 }
+
+provider "nomad" {
+  address   = local.nomad_addr
+  secret_id = local.secret_id
+}
