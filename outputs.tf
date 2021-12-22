@@ -1,5 +1,5 @@
 output "nomad" {
-  value = "https://${cloudfoundry_route.nomad.endpoint}:4443"
+  value = local.nomad_addr
 }
 
 output "fabio_ui" {
@@ -16,4 +16,8 @@ output "nomad_server_bootstrap" {
 
 output "consul_server_bootstrap" {
   value = hsdp_container_host_exec.consul_server_init.result
+}
+
+output "secret_id" {
+  value = local.secret_id
 }

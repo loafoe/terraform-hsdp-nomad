@@ -2,6 +2,8 @@ locals {
   cartel_token     = var.region == "us-east" ? var.us_cartel_token : var.eu_cartel_token
   cartel_secret    = var.region == "us-east" ? var.us_cartel_secret : var.eu_cartel_secret
   hostname_postfix = "${random_pet.deploy.id}.${data.hsdp_config.cf.domain}"
+  secret_id        = join("", regex("Secret\\s+ID\\s+=\\s+(.*[^\\n])", hsdp_container_host_exec.nomad_server_init.result))
+  nomad_addr       = "https://${cloudfoundry_route.nomad.endpoint}:4443"
 }
 
 resource "random_pet" "deploy" {
