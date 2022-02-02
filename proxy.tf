@@ -1,5 +1,5 @@
 resource "cloudfoundry_app" "nomad_proxy" {
-  name         = "tf-nomad-proxy"
+  name         = "tf-envoyproxy-nomad"
   space        = data.cloudfoundry_space.space.id
   memory       = 128
   disk_quota   = 512
