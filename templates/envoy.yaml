@@ -48,7 +48,7 @@ static_resources:
           - name: envoy.filters.http.router
   clusters:
   - name: nomad
-    connect_timeout: 30s
+    connect_timeout: 170s
     type: LOGICAL_DNS
     # Comment out the following line to test on v6 networks
     dns_lookup_family: V4_ONLY
@@ -63,7 +63,7 @@ static_resources:
                 address: ${upstream_host}
                 port_value: ${upstream_port}
   - name: fabio
-    connect_timeout: 30s
+    connect_timeout: 170s
     type: LOGICAL_DNS
     # Comment out the following line to test on v6 networks
     dns_lookup_family: V4_ONLY
@@ -78,7 +78,7 @@ static_resources:
                 address: ${upstream_host}
                 port_value: ${fabio_proxy_port}
   - name: fabio_ui
-    connect_timeout: 30s
+    connect_timeout: 170s
     type: LOGICAL_DNS
     # Comment out the following line to test on v6 networks
     dns_lookup_family: V4_ONLY
