@@ -1,5 +1,5 @@
 resource "hsdp_container_host" "nomad_server" {
-  name                        = "${random_pet.deploy.id}-server.dev"
+  name                        = "${var.name}.dev"
   volumes                     = 1
   volume_size                 = 100
   instance_type               = var.instance_type
@@ -43,7 +43,7 @@ resource "hsdp_container_host_exec" "nomad_server_init" {
     "docker network create nomad || true",
     "docker create -v nomad-server-config:/config --name alpine alpine",
     "docker cp /home/${var.ldap_user}/server.hcl alpine:/config",
-    "docker run -d -l nomad_ignore=true --restart on-failure --name nomad-server -v nomad-server-data:/nomad -v nomad-server-config:/config -p48862:48862 -p8282:8282 -p8181:8181 -e NOMAD_ADDR=http://${hsdp_container_host.nomad_server.private_ip}:8282 -e DOCKER_HOST=tcp://${hsdp_container_host.nomad_server.private_ip}:2375 -e CONSUL_REGISTRY_ADDR=http://${hsdp_container_host.nomad_server.private_ip}:4040 -e HOSTNAME_POSTFIX=${local.hostname_postfix} ${var.nomad_image} nomad agent -server -bind=0.0.0.0 -acl-enabled -plugin-dir=/plugins -config=/config/server.hcl -data-dir=/tmp/nomad",
+    "docker run -d -l nomad_ignore=true --restart on-failure --name nomad-server -v nomad-server-data:/nomad -v nomad-server-config:/config -p48862:48862 -p8282:8282 -p8181:8181 -e NOMAD_ADDR=http://${hsdp_container_host.nomad_server.private_ip}:8282 -e DOCKER_HOST=tcp://${hsdp_container_host.nomad_server.private_ip}:2375 -e CONSUL_REGISTRY_ADDR=http://${hsdp_container_host.nomad_server.private_ip}:4040 -e HOSTNAME_POSTFIX=${var.hostname_postfix} ${var.nomad_image} nomad agent -server -bind=0.0.0.0 -acl-enabled -plugin-dir=/plugins -config=/config/server.hcl -data-dir=/tmp/nomad",
     "sleep 5",
     "docker exec nomad-server nomad acl bootstrap"
   ]

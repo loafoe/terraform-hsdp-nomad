@@ -11,11 +11,11 @@ output "fabio" {
 }
 
 output "nomad_server_bootstrap" {
-  value = hsdp_container_host_exec.nomad_server_init.result
+  value = module.nomad_server.nomad_result
 }
 
 output "consul_server_bootstrap" {
-  value = hsdp_container_host_exec.consul_server_init.result
+  value = module.nomad_server.consul_result
 }
 
 output "secret_id" {

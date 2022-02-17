@@ -9,7 +9,7 @@ resource "cloudfoundry_app" "nomad_proxy" {
 
   environment = merge({
     ENVOYCONFIG_BASE64 = base64encode(templatefile("${path.module}/templates/envoy.yaml", {
-      upstream_host    = hsdp_container_host.nomad_server.private_ip
+      upstream_host    = module.nomad_server.private_ip
       upstream_port    = "8282"
       fabio_proxy_port = "10000"
       fabio_ui_port    = "10001"
