@@ -15,10 +15,12 @@ resource "hsdp_container_host" "nomad_node" {
   keep_failed_instances = false
 }
 
-resource "hsdp_container_host_exec" "init_nomad" {
+resource "ssh_resource" "init_nomad" {
   host  = hsdp_container_host.nomad_node.private_ip
   user  = var.user
   agent = true
+
+  bastion_host = data.hsdp_config.gw.host
 
   file {
     content = templatefile("${path.module}/templates/node.hcl", {

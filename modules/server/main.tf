@@ -15,10 +15,12 @@ resource "hsdp_container_host" "nomad_server" {
   keep_failed_instances = false
 }
 
-resource "hsdp_container_host_exec" "nomad_server_init" {
+resource "ssh_resource" "nomad_server_init" {
   host  = hsdp_container_host.nomad_server.private_ip
   user  = var.ldap_user
   agent = true
+
+  bastion_host = data.hsdp_config.gw.host
 
   file {
     content = templatefile("${path.module}/templates/server.hcl", {

@@ -4,5 +4,8 @@ terraform {
       source  = "philips-software/hsdp"
       version = ">= 0.27.5"
     }
+    ssh = {
+      source = "loafoe/ssh"
+    }
   }
 }

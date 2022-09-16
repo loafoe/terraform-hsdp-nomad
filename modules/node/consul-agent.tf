@@ -1,7 +1,9 @@
-resource "hsdp_container_host_exec" "consul_agent_init" {
+resource "ssh_resource" "consul_agent_init" {
   host  = hsdp_container_host.nomad_node.private_ip
   user  = var.user
   agent = true
+
+  bastion_host = data.hsdp_config.gw.host
 
   file {
     content = templatefile("${path.module}/templates/consul-agent.hcl", {
